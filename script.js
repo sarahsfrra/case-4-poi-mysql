@@ -25,7 +25,7 @@ function mark(event) {
     currentMarker = marker
 
     marker.bindPopup(`
-        <div style="width: 150px;">
+        <div style="width:120px;">
             <div class="mb-1">
                 <label for="nama" class="form-label"> Nama </label>
                 <input type="text" class="form-control" name="nama" id="nama"/>
@@ -86,8 +86,7 @@ function cancel() {
     }
 }
 
-map.on('click', mark)
-
+map.on('click', mark)  
 
 //===================================================================================================================
 // Fetch and add places to the map
@@ -124,7 +123,7 @@ fetchPlaces();
 function makeDraggable(marker, place) {
     marker.options.draggable = true; // Allow marker to be draggable
 
-    marker.on('dragend', function(event) { // Handle marker drag
+    marker.on('dragend', function(event) { // Menangani saat marker digeser
         const newLatLng = event.target.getLatLng();
         
         // Update popup to allow editing and updating
@@ -151,12 +150,17 @@ function makeDraggable(marker, place) {
                     <input type="number" class="form-control" id="update-rating" value="${place.rating}">
                 </div>
                 <button class="btn btn-primary" onclick="updatePlace(${place.id}, ${newLatLng.lat}, ${newLatLng.lng})">Update</button>
-                <button onclick="cancel()" class="btn btn-danger" type="button">Batal</button>
+                <button onclick="closePopup()" class="btn btn-danger" type="button">Batal</button>
 
             </div>
         `).openPopup();
     });
 }
+
+function closePopup() {
+    map.closePopup(); // Menutup pop-up
+}
+
 
 // Fetch all places and add them to the map
 function fetchPlaces() {
@@ -198,7 +202,9 @@ function updatePlace(id, lat, lng) {
 
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            console.log("Place updated successfully.");
+            // Menutup pop-up dan menampilkan pesan konfirmasi
+            map.closePopup(); // Tutup pop-up setelah update
+            swal("Update berhasil!", "Data tempat telah diperbarui.", "success"); // Pesan konfirmasi
         }
     };
 
