@@ -123,7 +123,7 @@ fetchPlaces();
 function makeDraggable(marker, place) {
     marker.options.draggable = true; // Allow marker to be draggable
 
-    marker.on('dragend', function(event) { // Menangani saat  marker digeser
+    marker.on('dragend', function(event) { //Menangani saat  marker digeser
         const newLatLng = event.target.getLatLng();
         
         // Update popup to allow editing and updating
